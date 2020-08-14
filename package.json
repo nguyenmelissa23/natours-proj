@@ -29,6 +29,7 @@
     "mongoose": "^5.9.28",
     "morgan": "^1.10.0",
     "prettier": "^2.0.5",
-    "slugify": "^1.4.5"
+    "slugify": "^1.4.5",
+    "validator": "^13.1.1"
   }
 }
