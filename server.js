@@ -13,8 +13,6 @@ mongoose
 	})
 	.then( conn => { console.log('DB connected successfully');});
 
-
-
 // 4) START SERVER:
 const app = require('./app');
 const port = 8000 || process.env.PORT ;

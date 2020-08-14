@@ -4,13 +4,18 @@ const tourController = require('./../controllers/tourController')
 
 const router = express.Router();
 
-router.param('id', tourController.checkID);
+// router.param('id', tourController.checkID);
 
 // 3) ROUTES:
 router
+	.route('/top-5-cheap')
+	.get(tourController.aliasTopTours, tourController.getAllTours)
+	//aliasTopTours is the middleware, written in the controller.
+
+router
 	.route('/')
 	.get(tourController.getAllTours)
-	.post(tourController.checkBody, tourController.createTour);
+	.post(tourController.createTour);
 
 router
 	.route('/:id')
