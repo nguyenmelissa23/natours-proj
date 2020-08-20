@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "start:prod": "NODE_ENV=production nodemon server.js", 
-		"debug": "ndb server.js"
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/nguyenmelissa23/natours-proj#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
@@ -27,6 +28,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.0.8",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.28",
     "morgan": "^1.10.0",
     "prettier": "^2.0.5",

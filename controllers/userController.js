@@ -1,11 +1,10 @@
-const fs = require('fs');
-
-const users = JSON.parse(
-	fs.readFileSync(`${__dirname}/../dev-data/data/users.json`)
-);
+const catchAsync = require('../utils/catchAsync');
+const User = require('../models/userModel');
 
 // 2) ROUTE HANDLERS
-exports.getAllUsers = (req, res) => {
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+	const users = await User.find();
+
 	res.status(200).json({
 		status: 'success', 
 		result: users.length,
@@ -13,7 +12,9 @@ exports.getAllUsers = (req, res) => {
 			users
 		}
 	});
-}
+})
+
+
 
 exports.getUser = (req, res) => {
 	const user = users.find(el => el.id == req.params.id);
@@ -31,10 +32,9 @@ exports.getUser = (req, res) => {
 	});
 }
 
-exports.createUser = (req, res) => {
-	const newId = users[tours.length - 1 ].id + 1;
-	const newUser = Object.assign({id: newId}, req.body);
-	tours.push(newUser);
+exports.createUser = catchAsync( async (req, res, next) => {
+	const newUser = await User.create(req.body)
+	users.push(newUser);
 	fs.writeFile(`${__dirname}/dev-data/data/users.json`, JSON.stringify(users), err => {
 		res.status(201).json({
 			status: 'success',
@@ -43,11 +43,11 @@ exports.createUser = (req, res) => {
 			}
 		})
 	})
-}
+})
 
 exports.updateUser = (req, res) => {
 	const user = users.find(el => el.id == req.params.id);
-	if (!tour){ 	
+	if (!user){ 	
 		return res.status(404).json({
 			status: 'fail',
 			message: 'Invalid ID'
@@ -56,7 +56,7 @@ exports.updateUser = (req, res) => {
 	res.status(200).json({
 		status: 'success', 
 		data: {
-			user: '<Updating tour here>...'
+			user: '<Updating user here>...'
 		}
 	})
 }
