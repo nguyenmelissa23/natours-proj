@@ -37,15 +37,20 @@ const handleDuplicateFieldsDB = err => {
 	return new AppError(message, 400);
 }
 
-const handleValidationError = err => {
+const handleValidationError = () => {
 	const errors = Object.values(err.errors).map(el => el.message)
 	const message = `Invalid input data. ${errors.join('. ')}`;
 	return new AppError(message, 400);
 }
 
+const handleJWTError = () => new AppError('Invalid token, please log in again!', 401);
+
+const handleJWTExpiredError = err => new AppError('Expired token, please log in again!', 401);
+
 module.exports =  (err, req, res, next) => {
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
+	console.log(err)
 	if (process.env.NODE_ENV === 'development'){
 		sendErrorDev(err, res);
 		console.log(err.name);
@@ -54,6 +59,8 @@ module.exports =  (err, req, res, next) => {
 		if (err.name === 'CastError') error = handleCastErrorDB(error);
 		if (err.code === 11000) error = handleDuplicateFieldsDB(error);
 		if (err.name === 'ValidationError') error = handleValidationError(error);
+		if (err.name === 'JsonWebTokenError') error = handleJWTError(error)
+		if (err.name === 'TokenExpiredError') error = handleJWTExpiredError(error);
 		sendErrorProd(error, res);
 	}
 }

@@ -17,10 +17,15 @@ app.use(express.json());
 app.use(express.static(`${__dirname}/public/`)); // to serve static file.
 
 // NOTE: our own middleware: apply to every single request. Order matters!
+app.use((req, res, next) => {
+	console.log(req.headers);
+	next();
+})
 
 //mounting the router
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+
 
 // NOTE: Order MATTERS! This needs to go after we check all other routes!
 app.all('*', (req, res, next) => {

@@ -14,8 +14,6 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 	});
 })
 
-
-
 exports.getUser = (req, res) => {
 	const user = users.find(el => el.id == req.params.id);
 	if (!user){ 	
@@ -33,7 +31,8 @@ exports.getUser = (req, res) => {
 }
 
 exports.createUser = catchAsync( async (req, res, next) => {
-	const newUser = await User.create(req.body)
+	const newUser = await User.create(req.body);
+	console.log('req.body', req.body);
 	users.push(newUser);
 	fs.writeFile(`${__dirname}/dev-data/data/users.json`, JSON.stringify(users), err => {
 		res.status(201).json({
